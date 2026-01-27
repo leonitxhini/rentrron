@@ -11,7 +11,14 @@ import { useLanguage } from './LanguageProvider';
 export function Hero() {
   const { t } = useLanguage();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    pickupLocation: string;
+    dropoffLocation: string;
+    pickupDate: string;
+    pickupTime: string;
+    returnDate: string;
+    returnTime: string;
+  }>({
     pickupLocation: t.quickBooking.locations.prishtina,
     dropoffLocation: t.quickBooking.locations.prishtina,
     pickupDate: '27.01.2026',

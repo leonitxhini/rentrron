@@ -41,7 +41,7 @@ export function FinalCTA() {
               className="px-8 py-4 bg-[#25D366] text-white font-bold rounded-full flex items-center justify-center gap-3 hover:bg-[#20BA5A] transition-all"
             >
               <MessageCircle size={24} />
-              {t.cta.whatsApp}
+              {t.cta.whatsapp}
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}

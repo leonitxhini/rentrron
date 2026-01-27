@@ -67,7 +67,7 @@ export default function BookingSummaryPage() {
         
         {/* Transparent Navbar */}
         <div className="relative z-50">
-          <Navbar variant="transparent" />
+          <Navbar />
         </div>
 
         {/* Hero Content */}

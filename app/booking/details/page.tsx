@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Navbar } from '@/components/Navbar';
 import { useLanguage } from '@/components/LanguageProvider';
 import Image from 'next/image';
-import { MapPin, Calendar, Clock, ArrowRight } from 'lucide-react';
+import { MapPin, Calendar, Clock, ArrowRight, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -55,7 +55,7 @@ export default function BookingDetailsPage() {
         
         {/* Transparent Navbar */}
         <div className="relative z-50">
-          <Navbar variant="transparent" />
+          <Navbar />
         </div>
 
         {/* Hero Content */}

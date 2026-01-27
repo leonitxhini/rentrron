@@ -23,6 +23,10 @@ export const i18n = {
       returnDate: 'Return Date',
       returnTime: 'Return Time',
       continueBooking: 'Continue Booking',
+      carType: 'Car Type',
+      getOffer: 'Get Offer',
+      fromDate: 'From Date',
+      toDate: 'To Date',
       locations: {
         ferizaj: 'Ferizaj',
         prishtina: 'Prishtina Airport',
@@ -237,6 +241,10 @@ export const i18n = {
       returnDate: 'Data e Kthimit',
       returnTime: 'Ora e Kthimit',
       continueBooking: 'Vazhdo Rezervimin',
+      carType: 'Lloji i Veturës',
+      getOffer: 'Merr Ofertë',
+      fromDate: 'Prej Datës',
+      toDate: 'Deri në Datë',
       locations: {
         ferizaj: 'Ferizaj',
         prishtina: 'Aeroporti i Prishtinës',

@@ -5,13 +5,16 @@ import { useRef } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { Shield, Sparkles, Zap } from 'lucide-react';
 
-const stats = [
+type StatsKey = 'clients' | 'cars' | 'pickups';
+type ValueKey = 'trust' | 'cleanliness' | 'speed';
+
+const stats: { value: string; key: StatsKey }[] = [
   { value: '500+', key: 'clients' },
   { value: '12', key: 'cars' },
   { value: '1000+', key: 'pickups' },
 ];
 
-const values = [
+const values: { icon: typeof Shield; key: ValueKey }[] = [
   { icon: Shield, key: 'trust' },
   { icon: Sparkles, key: 'cleanliness' },
   { icon: Zap, key: 'speed' },

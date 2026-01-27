@@ -94,7 +94,7 @@ export function BookingModal({
 
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    {t.quickBooking.fromDate}
+                    {t.quickBooking.pickupDate}
                   </label>
                   <input
                     type="date"
@@ -106,7 +106,7 @@ export function BookingModal({
 
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    {t.quickBooking.toDate}
+                    {t.quickBooking.returnDate}
                   </label>
                   <input
                     type="date"

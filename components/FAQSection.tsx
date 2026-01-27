@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import Link from 'next/link';
 
 export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(1);

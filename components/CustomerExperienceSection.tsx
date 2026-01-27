@@ -177,10 +177,9 @@ export function CustomerExperienceSection() {
                     mouseY.set((e.clientY - centerY) / 1000);
                   }
                 }}
-                style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+                style={{ top: feature.top, rotateX, rotateY, transformStyle: 'preserve-3d' }}
                 whileHover={{ scale: 1.1, y: -5 }}
                 className={`absolute ${feature.position === 'left' ? 'left-0' : 'right-0'} z-20 group`}
-                style={{ top: feature.top }}
               >
                 <div className="flex items-center gap-4 cursor-pointer relative">
                   {feature.position === 'left' && (

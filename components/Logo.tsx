@@ -41,6 +41,7 @@ export function Logo({ className = '', showText = true, size = 'md', variant = '
     sm: 'text-lg',
     md: 'text-2xl',
     lg: 'text-3xl',
+    xl: 'text-4xl',
   };
 
   return (
