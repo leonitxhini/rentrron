@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CarCard } from '@/components/CarCard';
 import { useLanguage } from '@/components/LanguageProvider';
 import { cars, Car, Transmission, Fuel, Location } from '@/data/cars';
-import { Filter, X, Compare } from 'lucide-react';
+import { Filter, X, GitCompare } from 'lucide-react';
 import { BookingModal } from '@/components/BookingModal';
 
 type SortOption = 'popular' | 'priceLow' | 'priceHigh' | 'newest';
@@ -205,7 +205,7 @@ export default function FleetPage() {
                     onClick={() => setCompareOpen(true)}
                     className="flex items-center gap-2 px-4 py-2 bg-accent text-white font-bold rounded-lg"
                   >
-                    <Compare size={20} />
+                    <GitCompare size={20} />
                     Compare ({compareCars.length})
                   </button>
                 )}
