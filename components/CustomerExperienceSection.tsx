@@ -120,7 +120,8 @@ export function CustomerExperienceSection() {
           </motion.p>
         </motion.div>
 
-        <div ref={containerRef} className="relative max-w-6xl mx-auto">
+        {/* Desktop Layout - Features around car */}
+        <div ref={containerRef} className="relative max-w-6xl mx-auto hidden lg:block">
           {/* Hero Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -381,6 +382,66 @@ export function CustomerExperienceSection() {
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Mobile Layout - Car on top, features grid below */}
+        <div className="lg:hidden space-y-8">
+          {/* Car Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative w-full h-[300px] sm:h-[400px] flex items-center justify-center"
+          >
+            <div className="relative w-full h-full">
+              {/* Glow behind image */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-accent via-purple-500 to-pink-500 blur-3xl opacity-20"
+                animate={{
+                  opacity: [0.15, 0.25, 0.15],
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              <Image
+                src="/hero/hero-image.png"
+                alt="RRON Rent A Car"
+                fill
+                className="object-contain relative z-10 drop-shadow-2xl"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800';
+                }}
+              />
+            </div>
+          </motion.div>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="glass-card rounded-2xl p-4 sm:p-6 border border-white/10"
+                >
+                  <div className="flex items-center gap-4">
+                    {/* Icon */}
+                    <div className={`w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                      <Icon size={28} className="text-white" />
+                    </div>
+                    {/* Text */}
+                    <p className="text-white font-bold text-sm sm:text-base">
+                      {feature.text}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
