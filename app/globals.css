@@ -56,8 +56,64 @@ html {
   }
 }
 
-/* Additional breakpoint for devices with width >= 480px (most phones in landscape) */
-@media (min-width: 480px) {
+/* Additional breakpoint for devices with width >= 360px (most phones including portrait) */
+@media (min-width: 360px) and (max-width: 639px) {
+  .booking-form-top-row.grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.5rem !important;
+  }
+  
+  .booking-form-bottom-row.grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 0.5rem !important;
+  }
+  
+  .booking-form-button-col {
+    grid-column: span 1 !important;
+  }
+  
+  /* Reduce padding and font size on small screens for better fit */
+  .booking-form-top-row input,
+  .booking-form-top-row select,
+  .booking-form-bottom-row input,
+  .booking-form-bottom-row select {
+    padding: 0.5rem !important;
+    font-size: 0.75rem !important;
+    height: 2.5rem !important;
+  }
+  
+  .booking-form-top-row label,
+  .booking-form-bottom-row label {
+    font-size: 0.625rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  
+  .booking-form-top-row label svg,
+  .booking-form-bottom-row label svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  
+  /* Make button smaller */
+  .booking-form-button-col button {
+    font-size: 0.75rem !important;
+    padding: 0.5rem !important;
+    height: 2.5rem !important;
+  }
+  
+  .booking-form-button-col button svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  
+  /* Reduce card padding on mobile */
+  .glass-card {
+    padding: 0.75rem !important;
+  }
+}
+
+/* Larger screens keep default styles */
+@media (min-width: 640px) {
   .booking-form-top-row.grid {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }

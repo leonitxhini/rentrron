@@ -21,10 +21,10 @@ export function Hero() {
   }>({
     pickupLocation: t.quickBooking.locations.prishtina,
     dropoffLocation: t.quickBooking.locations.prishtina,
-    pickupDate: '27.01.2026',
-    pickupTime: '',
-    returnDate: '28.01.2026',
-    returnTime: '',
+    pickupDate: '2026-01-27',
+    pickupTime: '10:00',
+    returnDate: '2026-01-28',
+    returnTime: '10:00',
   });
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -211,15 +211,10 @@ export function Hero() {
                     </label>
                     <div className="relative">
                       <input
-                        type="text"
+                        type="date"
                         value={formData.pickupDate}
                         onChange={(e) => setFormData({ ...formData, pickupDate: e.target.value })}
-                        placeholder="DD.MM.YYYY"
-                        className="w-full px-3 sm:px-4 py-3 sm:py-4 bg-[#0A1929]/50 border-2 border-white/10 rounded-lg sm:rounded-xl text-white text-sm sm:text-base font-semibold focus:outline-none focus:border-accent transition-all group-hover:border-white/20"
-                      />
-                      <Calendar
-                        size={16}
-                        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none"
+                        className="w-full px-3 sm:px-4 py-3 sm:py-4 bg-[#0A1929]/50 border-2 border-white/10 rounded-lg sm:rounded-xl text-white text-sm sm:text-base font-semibold focus:outline-none focus:border-accent transition-all group-hover:border-white/20 [color-scheme:dark]"
                       />
                     </div>
                   </div>
@@ -235,15 +230,10 @@ export function Hero() {
                     </label>
                     <div className="relative">
                       <input
-                        type="text"
+                        type="time"
                         value={formData.pickupTime}
                         onChange={(e) => setFormData({ ...formData, pickupTime: e.target.value })}
-                        placeholder="--:--"
-                        className="w-full px-3 sm:px-4 py-3 sm:py-4 bg-[#0A1929]/50 border-2 border-white/10 rounded-lg sm:rounded-xl text-white text-sm sm:text-base font-semibold focus:outline-none focus:border-accent transition-all group-hover:border-white/20"
-                      />
-                      <Clock
-                        size={16}
-                        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none"
+                        className="w-full px-3 sm:px-4 py-3 sm:py-4 bg-[#0A1929]/50 border-2 border-white/10 rounded-lg sm:rounded-xl text-white text-sm sm:text-base font-semibold focus:outline-none focus:border-accent transition-all group-hover:border-white/20 [color-scheme:dark]"
                       />
                     </div>
                   </div>
@@ -256,15 +246,10 @@ export function Hero() {
                     </label>
                     <div className="relative">
                       <input
-                        type="text"
+                        type="date"
                         value={formData.returnDate}
                         onChange={(e) => setFormData({ ...formData, returnDate: e.target.value })}
-                        placeholder="DD.MM.YYYY"
-                        className="w-full px-3 sm:px-4 py-3 sm:py-4 bg-[#0A1929]/50 border-2 border-white/10 rounded-lg sm:rounded-xl text-white text-sm sm:text-base font-semibold focus:outline-none focus:border-accent transition-all group-hover:border-white/20"
-                      />
-                      <Calendar
-                        size={16}
-                        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none"
+                        className="w-full px-3 sm:px-4 py-3 sm:py-4 bg-[#0A1929]/50 border-2 border-white/10 rounded-lg sm:rounded-xl text-white text-sm sm:text-base font-semibold focus:outline-none focus:border-accent transition-all group-hover:border-white/20 [color-scheme:dark]"
                       />
                     </div>
                   </div>
@@ -277,15 +262,10 @@ export function Hero() {
                     </label>
                     <div className="relative">
                       <input
-                        type="text"
+                        type="time"
                         value={formData.returnTime}
                         onChange={(e) => setFormData({ ...formData, returnTime: e.target.value })}
-                        placeholder="--:--"
-                        className="w-full px-3 sm:px-4 py-3 sm:py-4 bg-[#0A1929]/50 border-2 border-white/10 rounded-lg sm:rounded-xl text-white text-sm sm:text-base font-semibold focus:outline-none focus:border-accent transition-all group-hover:border-white/20"
-                      />
-                      <Clock
-                        size={16}
-                        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none"
+                        className="w-full px-3 sm:px-4 py-3 sm:py-4 bg-[#0A1929]/50 border-2 border-white/10 rounded-lg sm:rounded-xl text-white text-sm sm:text-base font-semibold focus:outline-none focus:border-accent transition-all group-hover:border-white/20 [color-scheme:dark]"
                       />
                     </div>
                   </div>
