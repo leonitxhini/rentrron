@@ -38,6 +38,50 @@ html {
   }
 }
 
+/* Mobile landscape optimizations for booking forms */
+/* This ensures the form displays horizontally on mobile devices in landscape mode */
+@media (orientation: landscape) {
+  .booking-form-top-row.grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    display: grid !important;
+  }
+  
+  .booking-form-bottom-row.grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    display: grid !important;
+  }
+  
+  .booking-form-button-col {
+    grid-column: span 1 !important;
+  }
+}
+
+/* Additional breakpoint for devices with width >= 480px (most phones in landscape) */
+@media (min-width: 480px) {
+  .booking-form-top-row.grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+  
+  .booking-form-bottom-row.grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+  
+  .booking-form-button-col {
+    grid-column: span 1 !important;
+  }
+}
+
+/* For very small landscape devices */
+@media (orientation: landscape) and (max-width: 900px) {
+  .booking-form-top-row.grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+  
+  .booking-form-bottom-row.grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: #0A0A0A;

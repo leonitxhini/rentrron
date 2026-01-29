@@ -152,7 +152,7 @@ export function Hero() {
             <div className="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 border border-white/10">
               <form onSubmit={handleFormSubmit} className="space-y-4 sm:space-y-6">
                 {/* Top Row */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                <div className="booking-form-top-row grid grid-cols-1 min-[480px]:grid-cols-3 sm:grid-cols-3 landscape:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
                   {/* Pick-up Location */}
                   <div className="group">
                     <label className="flex items-center gap-2 text-xs sm:text-sm font-bold text-white mb-2 sm:mb-3">
@@ -226,7 +226,7 @@ export function Hero() {
                 </div>
 
                 {/* Bottom Row */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                <div className="booking-form-bottom-row grid grid-cols-1 min-[480px]:grid-cols-4 sm:grid-cols-4 md:grid-cols-4 landscape:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-6">
                   {/* Pick-up Time */}
                   <div className="group">
                     <label className="flex items-center gap-2 text-xs sm:text-sm font-bold text-white mb-2 sm:mb-3">
@@ -291,7 +291,7 @@ export function Hero() {
                   </div>
 
                   {/* Continue Booking Button */}
-                  <div className="flex items-end sm:col-span-2 md:col-span-1">
+                  <div className="booking-form-button-col flex items-end sm:col-span-2 md:col-span-1 landscape:col-span-1">
                     <motion.button
                       type="submit"
                       whileHover={{ scale: 1.02, y: -2 }}

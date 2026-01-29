@@ -155,9 +155,16 @@ export function Navbar() {
               className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-[#0A1929] border-l border-white/10 shadow-2xl z-50 lg:hidden overflow-y-auto"
             >
               <div className="p-6 space-y-6">
-                {/* Mobile Logo */}
-                <div className="pb-6 border-b border-white/10">
+                {/* Mobile Logo & Close Button */}
+                <div className="pb-6 border-b border-white/10 flex items-center justify-between">
                   <Logo showText={false} size="lg" variant="light" />
+                  <button
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+                    aria-label="Close menu"
+                  >
+                    <X size={24} />
+                  </button>
                 </div>
 
                 {/* Navigation Links */}
@@ -182,6 +189,14 @@ export function Navbar() {
                       </Link>
                     </motion.div>
                   ))}
+                </div>
+
+                {/* Language Toggle in Mobile Menu */}
+                <div className="pt-4 border-t border-white/10">
+                  <div className="mb-4">
+                    <p className="text-sm text-white/60 mb-2">Language</p>
+                    <LanguageToggle variant="transparent" />
+                  </div>
                 </div>
 
                 {/* Book Now Button */}

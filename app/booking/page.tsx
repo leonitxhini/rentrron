@@ -104,7 +104,7 @@ export default function BookingPage() {
                 <div className="glass-card rounded-3xl p-8 md:p-12 border border-white/10">
                   <form onSubmit={handleFormSubmit} className="space-y-6">
                     {/* Top Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="booking-form-top-row grid grid-cols-1 min-[480px]:grid-cols-3 sm:grid-cols-3 landscape:grid-cols-3 gap-6">
                       {/* Pick-up Location */}
                       <div className="group">
                         <label className="flex items-center gap-2 text-sm font-bold text-white mb-3">
@@ -178,7 +178,7 @@ export default function BookingPage() {
                     </div>
 
                     {/* Bottom Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div className="booking-form-bottom-row grid grid-cols-1 min-[480px]:grid-cols-4 sm:grid-cols-4 md:grid-cols-4 landscape:grid-cols-4 gap-6">
                       {/* Pick-up Time */}
                       <div className="group">
                         <label className="flex items-center gap-2 text-sm font-bold text-white mb-3">
