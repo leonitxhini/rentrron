@@ -9,8 +9,8 @@ export default function Home() {
   return (
     <main className="relative">
       <Hero />
-      <BestServiceSection />
       <MostSearchedCars />
+      <BestServiceSection />
       <HowItWorksSection />
       <CustomerExperienceSection />
       <Footer />

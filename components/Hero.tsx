@@ -115,31 +115,34 @@ export function Hero() {
       <div className="container mx-auto px-4 sm:px-6 relative z-20 flex-1 flex flex-col justify-center items-center py-8 sm:py-12">
 
 
-        {/* CTA Buttons with Advanced Effects */}
+        {/* Hero Content with Slogan */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="flex flex-col items-center justify-center mb-12"
+          transition={{ delay: 0.3 }}
+          className="flex flex-col items-center justify-center mb-12 text-center"
         >
-          {/* Logo above both buttons */}
+          {/* Cool Slogan */}
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 0.7 }}
-            whileHover={{ scale: 1.1, y: -5 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
             className="mb-8 relative z-10"
           >
-            <div className="relative w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 flex items-center justify-center">
-              {/* Glow effect around logo */}
-              <div className="absolute inset-0 bg-accent blur-3xl opacity-20" />
-              <img
-                src="/hero/logo-head.png"
-                alt="Logo"
-                className="relative z-10 w-full h-full object-contain drop-shadow-2xl"
-                style={{ filter: 'drop-shadow(0 0 30px rgba(59, 130, 246, 0.6))' }}
-              />
-            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 leading-tight">
+              <span className="block">{t.hero.sloganPart1}</span>
+              <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                {t.hero.sloganPart2}
+              </span>
+            </h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="text-lg sm:text-xl md:text-2xl text-white/80 font-medium max-w-2xl mx-auto"
+            >
+              {t.hero.subtitle}
+            </motion.p>
           </motion.div>
 
           {/* Booking Form */}

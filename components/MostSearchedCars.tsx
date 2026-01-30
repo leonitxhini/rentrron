@@ -1,288 +1,169 @@
 'use client';
 
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Users, Fuel, Settings, ArrowRight, Star, Sparkles } from 'lucide-react';
-import { cars } from '@/data/cars';
+import { Users, Settings, Fuel as FuelIcon, ArrowRight, Heart } from 'lucide-react';
+import { cars, Car } from '@/data/cars';
 import { useLanguage } from './LanguageProvider';
+import { RentNowModal } from './RentNowModal';
 
 export function MostSearchedCars() {
   const { t } = useLanguage();
-  const featuredCars = cars.slice(0, 4);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const featuredCars = cars.filter(car => car.featured).slice(0, 6);
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const getFuelIcon = (fuel: string) => {
-    if (fuel.toLowerCase().includes('electric')) return '⚡';
-    return '⛽';
+  const toggleFavorite = (carId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setFavorites((prev) =>
+      prev.includes(carId) ? prev.filter((id) => id !== carId) : [...prev, carId]
+    );
   };
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white py-32 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-accent/10 to-purple-500/10 rounded-full blur-3xl"
-          animate={{
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{ duration: 20, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-pink-500/10 to-red-500/10 rounded-full blur-3xl"
-          animate={{
-            x: [0, -100, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{ duration: 25, repeat: Infinity }}
-        />
+    <section className="relative overflow-hidden">
+      {/* Blur Section with Title at the top */}
+      <div className="relative h-40 md:h-56 overflow-hidden">
+        {/* Background Image with Blur */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(/ourcarsbackground.png)' }}
+        >
+          <div className="absolute inset-0 backdrop-blur-md bg-gradient-to-b from-[#0A1929]/60 via-[#0A1929]/40 to-transparent" />
+        </div>
+        
+        {/* Title Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-2 px-4">
+              <span className="text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">OUR</span>{' '}
+              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_4px_12px_rgba(139,92,246,0.5)]">
+                RENTAL CARS
+              </span>
+            </h2>
+            <p className="text-white/90 text-base sm:text-lg md:text-xl font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)] px-4">
+              {t.ourCars.mostPopular}
+            </p>
+          </motion.div>
+        </div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-block mb-6"
-          >
-            <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-black mb-4 relative">
-              <span>{t.ourCars.title.split(' ')[0]}</span>
-              <br />
-              <span className="gradient-text">{t.ourCars.title.split(' ')[1]}</span>
-              {/* Glow Effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-accent via-purple-500 to-pink-500 blur-3xl opacity-20"
-                animate={{
-                  opacity: [0.1, 0.3, 0.1],
-                }}
-                transition={{ duration: 4, repeat: Infinity }}
-              />
-            </h2>
-          </motion.div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-600 text-xl max-w-3xl mx-auto leading-relaxed"
-          >
-            {t.ourCars.subtitle}
-          </motion.p>
-        </motion.div>
+      {/* Main Content Area - Background Image */}
+      <div className="relative py-12 sm:py-16 md:py-20 lg:py-32 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/ourcarsbackground.png)' }}>
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
 
-        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Cars Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {featuredCars.map((car, index) => {
-            const mouseX = useMotionValue(0);
-            const mouseY = useMotionValue(0);
+            const isFavorite = favorites.includes(car.id);
+            // Calculate fuel capacity (simplified)
+            const fuelCapacity = car.fuel === 'Electric' ? '0L' : car.fuel === 'Hybrid' ? '60L' : '100L';
             
-            const rotateX = useTransform(mouseY, [-0.5, 0.5], [5, -5]);
-            const rotateY = useTransform(mouseX, [-0.5, 0.5], [-5, 5]);
-
             return (
               <motion.div
                 key={car.id}
-                initial={{ opacity: 0, y: 50, rotateX: -10 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.15, type: "spring", stiffness: 100 }}
-                onHoverStart={() => setHoveredIndex(index)}
-                onHoverEnd={() => setHoveredIndex(null)}
-                onMouseMove={(e) => {
-                  if (containerRef.current) {
-                    const rect = containerRef.current.getBoundingClientRect();
-                    const centerX = rect.left + rect.width / 2;
-                    const centerY = rect.top + rect.height / 2;
-                    mouseX.set((e.clientX - centerX) / 1000);
-                    mouseY.set((e.clientY - centerY) / 1000);
-                  }
-                }}
-                style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-                whileHover={{ y: -15, scale: 1.02 }}
-                className="relative group"
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="group"
               >
-                {/* Outer Glow */}
-                <motion.div
-                  className="absolute -inset-3 bg-gradient-to-r from-accent via-purple-500 to-pink-500 rounded-3xl blur-2xl opacity-0 group-hover:opacity-40 transition-opacity duration-500"
-                  animate={{
-                    opacity: hoveredIndex === index ? 0.4 : 0,
-                  }}
-                />
-
-                {/* Main Card */}
-                <div className="relative bg-white rounded-3xl border-2 border-gray-200 overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:border-accent/30">
+                {/* Car Card */}
+                <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-full flex flex-col border border-gray-200">
                   {/* Image Container */}
-                  <div className="relative w-full h-64 overflow-hidden">
-                    {/* Gradient Overlays */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent z-10 group-hover:from-black/30 transition-all duration-500" />
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-accent/0 to-purple-500/0 group-hover:from-accent/20 group-hover:to-purple-500/20 z-5 transition-all duration-500"
-                    />
-
+                  <div className="relative w-full h-56 overflow-hidden bg-gray-100">
                     <Image
                       src={car.images[0] || 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600'}
                       alt={car.name}
                       fill
-                      className="object-cover group-hover:scale-150 transition-transform duration-1000"
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-
-                    {/* Price Badge */}
-                    <motion.div
-                      initial={{ scale: 0, rotate: -180 }}
-                      whileInView={{ scale: 1, rotate: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.15 + 0.3, type: "spring" }}
-                      className="absolute top-4 right-4 glass-card px-4 py-2 rounded-full z-20 group-hover:scale-110 transition-all pulse-glow"
+                    
+                    {/* Favorite Button - Top Left */}
+                    <button
+                      onClick={(e) => toggleFavorite(car.id, e)}
+                      className="absolute top-3 left-3 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-md"
                     >
-                      <span className="text-white font-black text-base">€{car.pricePerDay}{t.ourCars.perDay}</span>
-                    </motion.div>
-
-                    {/* Popular Badge */}
-                    <motion.div
-                      initial={{ x: -50, opacity: 0 }}
-                      whileInView={{ x: 0, opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.15 + 0.4 }}
-                      className="absolute top-4 left-4 z-20"
-                    >
-                      <div className="flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shadow-lg">
-                        <Star size={14} className="text-white fill-white" />
-                        <span className="text-white text-xs font-bold">Popular</span>
-                      </div>
-                    </motion.div>
-
-                    {/* Shine Effect */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 z-15"
-                      animate={{
-                        x: hoveredIndex === index ? ['-200%', '200%'] : '-200%',
-                      }}
-                      transition={{
-                        duration: 1,
-                        repeat: hoveredIndex === index ? Infinity : 0,
-                        repeatDelay: 1.5,
-                      }}
-                    />
+                      <Heart
+                        size={20}
+                        className={isFavorite ? 'text-cyan-500 fill-cyan-500' : 'text-gray-400'}
+                      />
+                    </button>
                   </div>
                   
                   {/* Content */}
-                  <div className="p-6 bg-white relative overflow-hidden">
-                    {/* Animated Background Gradient */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-accent/0 to-purple-500/0 group-hover:from-accent/5 group-hover:to-purple-500/5 transition-all duration-500"
-                    />
-
-                    <div className="relative z-10">
-                      <h3 className="text-2xl font-black text-black mb-3 group-hover:gradient-text transition-all duration-300">
-                        {car.name}
-                      </h3>
-                      
-                      {/* Specs with Icons */}
-                      <div className="flex flex-wrap items-center gap-3 mb-6">
-                        <motion.div
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full group-hover:from-accent/10 group-hover:to-purple-500/10 transition-all"
-                        >
-                          <Users size={16} className="text-accent" />
-                          <span className="text-sm font-bold text-gray-700">{car.seats}</span>
-                        </motion.div>
-                        <motion.div
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full group-hover:from-accent/10 group-hover:to-purple-500/10 transition-all"
-                        >
-                          <span className="text-lg">{getFuelIcon(car.fuel)}</span>
-                          <span className="text-sm font-bold text-gray-700">{car.fuel}</span>
-                        </motion.div>
-                        <motion.div
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full group-hover:from-accent/10 group-hover:to-purple-500/10 transition-all"
-                        >
-                          <Settings size={16} className="text-accent" />
-                          <span className="text-sm font-bold text-gray-700">{car.transmission}</span>
-                        </motion.div>
-                      </div>
-
-                      {/* Price Display */}
-                      <div className="mb-6 p-4 bg-gradient-to-r from-accent/10 to-purple-500/10 rounded-xl border border-accent/20 group-hover:from-accent/20 group-hover:to-purple-500/20 transition-all">
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-3xl font-black gradient-text">€{car.pricePerDay}</span>
-                          <span className="text-gray-500 font-semibold">{t.ourCars.perDay}</span>
-                        </div>
-                      </div>
-
-                      {/* CTA Button */}
-                      <Link href={`/fleet/${car.slug}`}>
-                        <motion.button
-                          whileHover={{ scale: 1.02, x: 4 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-accent via-purple-500 to-pink-500 text-white rounded-xl font-black text-base shadow-xl hover:shadow-2xl transition-all group/btn relative overflow-hidden"
-                        >
-                          <span className="relative z-10">{t.ourCars.showMore}</span>
-                          <ArrowRight 
-                            size={18} 
-                            className="relative z-10 group-hover/btn:translate-x-2 transition-transform" 
-                          />
-                          {/* Animated Shine */}
-                          <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                            animate={{
-                              x: ['-100%', '100%'],
-                            }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              repeatDelay: 1,
-                            }}
-                          />
-                        </motion.button>
-                      </Link>
+                  <div className="p-4 sm:p-6 bg-white flex-1 flex flex-col">
+                    <div className="mb-3 sm:mb-4">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">{car.brand}</h3>
+                      <p className="text-xs sm:text-sm text-gray-600">{car.model}</p>
                     </div>
-                  </div>
+                    
+                    {/* Price */}
+                    <div className="mb-3 sm:mb-4">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-2xl sm:text-3xl font-bold text-gray-900">€{car.pricePerDay}.00</span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-gray-600">{t.ourCars.perDayLabel}</p>
+                    </div>
 
-                  {/* Floating Sparkles on Hover */}
-                  {hoveredIndex === index && (
-                    <>
-                      {[...Array(8)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute w-1.5 h-1.5 bg-accent rounded-full"
-                          initial={{
-                            x: '50%',
-                            y: '50%',
-                            scale: 0,
-                            opacity: 1,
-                          }}
-                          animate={{
-                            x: `${50 + (Math.random() - 0.5) * 300}%`,
-                            y: `${50 + (Math.random() - 0.5) * 300}%`,
-                            scale: [0, 1.5, 0],
-                            opacity: [1, 1, 0],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            delay: i * 0.25,
-                          }}
-                        />
-                      ))}
-                    </>
-                  )}
+                    {/* Feature Icons */}
+                    <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                      <div className="flex flex-col items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-cyan-100 rounded-xl border border-cyan-200 shadow-sm">
+                        <Users size={18} className="sm:w-[22px] sm:h-[22px] text-cyan-600 mb-1 sm:mb-1.5" />
+                        <span className="text-[10px] sm:text-xs font-bold text-gray-900">{car.seats} {t.ourCars.people}</span>
+                      </div>
+                      <div className="flex flex-col items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-cyan-100 rounded-xl border border-cyan-200 shadow-sm">
+                        <Settings size={18} className="sm:w-[22px] sm:h-[22px] text-cyan-600 mb-1 sm:mb-1.5" />
+                        <span className="text-[10px] sm:text-xs font-bold text-gray-900">{car.transmission === 'Automatic' ? t.ourCars.auto : t.ourCars.manual}</span>
+                      </div>
+                      <div className="flex flex-col items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-cyan-100 rounded-xl border border-cyan-200 shadow-sm">
+                        <FuelIcon size={18} className="sm:w-[22px] sm:h-[22px] text-cyan-600 mb-1 sm:mb-1.5" />
+                        <span className="text-[10px] sm:text-xs font-bold text-gray-900">{fuelCapacity}</span>
+                      </div>
+                    </div>
+
+                    {/* Rent Now Button */}
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => {
+                        setSelectedCar(car);
+                        setModalOpen(true);
+                      }}
+                      className="w-full mt-auto flex items-center justify-center gap-2 px-4 py-3 sm:py-3.5 bg-blue-500 text-white rounded-xl font-bold text-sm sm:text-base shadow-lg hover:bg-blue-600 hover:shadow-xl transition-all"
+                    >
+                      <span>{t.ourCars.rentNow}</span>
+                      <ArrowRight size={18} className="sm:w-5 sm:h-5" />
+                    </motion.button>
+                  </div>
                 </div>
               </motion.div>
             );
           })}
         </div>
+        </div>
       </div>
+
+      {/* Rent Now Modal */}
+      <RentNowModal
+        isOpen={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setSelectedCar(null);
+        }}
+        car={selectedCar}
+      />
     </section>
   );
 }
