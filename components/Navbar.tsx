@@ -61,9 +61,9 @@ export function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      <nav className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 pt-2 sm:pt-3 md:pt-4">
         <motion.div 
-          className={`relative flex items-center justify-between h-16 px-6 rounded-full transition-all duration-500 ${getNavbarStyles()}`}
+          className={`relative flex items-center justify-between h-14 sm:h-16 px-3 sm:px-4 md:px-6 rounded-full transition-all duration-500 ${getNavbarStyles()}`}
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -120,32 +120,26 @@ export function Navbar() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`group relative px-6 py-2.5 rounded-full font-semibold text-sm overflow-hidden ${
+                className={`group relative px-6 py-2.5 rounded-full font-semibold text-sm ${
                   isFleetPage
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/30'
-                    : 'bg-gradient-to-r from-accent to-accent-dark text-white shadow-lg shadow-blue-500/30'
+                    ? 'bg-purple-600 text-white hover:bg-purple-700'
+                    : 'bg-accent text-white hover:bg-accent/90'
                 }`}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   {t.nav.bookNow}
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
               </motion.button>
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="lg:hidden flex items-center gap-3">
+          <div className="lg:hidden flex items-center gap-2 sm:gap-3">
             <LanguageToggle variant={isFleetPage ? "default" : "transparent"} />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
+              className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
                 isFleetPage
                   ? 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'
                   : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
@@ -161,7 +155,7 @@ export function Navbar() {
                     exit={{ rotate: 90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <X size={24} />
+                    <X size={20} className="sm:w-6 sm:h-6" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -171,7 +165,7 @@ export function Navbar() {
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Menu size={24} />
+                    <Menu size={20} className="sm:w-6 sm:h-6" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -199,26 +193,26 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className={`fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] backdrop-blur-2xl border-l shadow-2xl z-50 lg:hidden overflow-y-auto ${
+              className={`fixed top-0 right-0 bottom-0 w-72 sm:w-80 max-w-[85vw] backdrop-blur-2xl border-l shadow-2xl z-50 lg:hidden overflow-y-auto ${
                 isFleetPage
                   ? 'bg-white border-gray-200'
                   : 'bg-white/10 border-white/20'
               }`}
             >
-              <div className="p-6 space-y-6">
+              <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
                 {/* Mobile Logo & Close Button */}
-                <div className="pb-6 border-b border-white/10 flex items-center justify-between">
-                  <Logo showText={false} size="lg" variant="light" />
+                <div className="pb-4 sm:pb-6 border-b border-white/10 flex items-center justify-between">
+                  <Logo showText={false} size="md" className="sm:size-lg" variant="light" />
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
+                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
                       isFleetPage
                         ? 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'
                         : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
                     }`}
                     aria-label="Close menu"
                   >
-                    <X size={24} />
+                    <X size={20} className="sm:w-6 sm:h-6" />
                   </button>
                 </div>
 
@@ -234,7 +228,7 @@ export function Navbar() {
                       <Link
                         href={link.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className={`block px-4 py-3 rounded-full text-base font-semibold transition-all ${
+                        className={`block px-3 sm:px-4 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold transition-all ${
                           pathname === link.href
                             ? isFleetPage
                               ? 'text-gray-900 bg-purple-100'
@@ -264,7 +258,7 @@ export function Navbar() {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full px-6 py-3.5 bg-gradient-to-r from-accent to-accent-dark text-white rounded-full font-semibold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30"
+                      className="w-full px-6 py-3.5 bg-accent text-white rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-accent/90"
                     >
                       {t.nav.bookNow}
                       <ArrowRight size={18} />

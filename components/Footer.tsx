@@ -71,42 +71,9 @@ export function Footer() {
                 <motion.div
                   whileHover={{ scale: 1.15, rotate: 360 }}
                   transition={{ duration: 0.6 }}
-                  className={`relative w-14 h-14 bg-gradient-to-br ${contact.gradient} rounded-2xl flex items-center justify-center shadow-2xl flex-shrink-0`}
+                  className="relative w-14 h-14 bg-accent rounded-xl flex items-center justify-center flex-shrink-0"
                 >
                   <Icon size={24} className="text-white relative z-10" />
-                  {/* Rotating Sparkles */}
-                  <motion.div
-                    className="absolute inset-0"
-                    animate={{
-                      rotate: [0, 360],
-                    }}
-                    transition={{
-                      duration: 20,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  >
-                    <Sparkles
-                      size={12}
-                      className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white/50"
-                    />
-                    <Sparkles
-                      size={10}
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-white/50"
-                    />
-                  </motion.div>
-                  {/* Shine Effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 rounded-2xl"
-                    animate={{
-                      x: ['-200%', '200%'],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 1,
-                    }}
-                  />
                 </motion.div>
                 <div>
                   <motion.h4
@@ -153,7 +120,7 @@ export function Footer() {
                     transition={{ delay: 0.2 + index * 0.1, type: "spring" }}
                     whileHover={{ scale: 1.2, y: -5, rotate: 360 }}
                     whileTap={{ scale: 0.9 }}
-                    className={`relative w-12 h-12 bg-gradient-to-br ${social.gradient} rounded-2xl flex items-center justify-center shadow-xl overflow-hidden group`}
+                    className="relative w-12 h-12 bg-accent rounded-xl flex items-center justify-center overflow-hidden group"
                   >
                     <Icon size={20} className="text-white relative z-10" />
                     {/* Shine Effect */}

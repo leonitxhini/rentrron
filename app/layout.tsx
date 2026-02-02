@@ -3,8 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { Navbar } from "@/components/Navbar";
+import { ConditionalNavbar } from "@/components/ConditionalNavbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,9 +32,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider>
           <LanguageProvider>
-            <Navbar />
+            <ConditionalNavbar />
             {children}
-            <FloatingWhatsApp />
           </LanguageProvider>
         </ThemeProvider>
       </body>

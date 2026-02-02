@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/components/LanguageProvider';
-import { cars, Car } from '@/data/cars';
+import { Car } from '@/data/cars';
 import { ChevronDown, Settings, Users, Fuel as FuelIcon, ArrowRight, Check } from 'lucide-react';
 import { RentNowModal } from '@/components/RentNowModal';
 import Image from 'next/image';
+import { getCarsFromSupabase } from '@/lib/cars';
 
 type SortOption = 'popular' | 'priceLow' | 'priceHigh' | 'newest';
 type PriceFilter = 'all' | 'low' | 'medium' | 'high';
@@ -16,6 +17,8 @@ type FilterType = 'price' | 'manufacture' | 'type' | 'rating' | null;
 
 export default function FleetPage() {
   const { t } = useLanguage();
+  const [cars, setCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
   const [priceFilter, setPriceFilter] = useState<PriceFilter>('all');
   const [manufactureFilter, setManufactureFilter] = useState<ManufactureFilter>([]);
   const [typeFilter, setTypeFilter] = useState<TypeFilter>([]);
@@ -23,6 +26,36 @@ export default function FleetPage() {
   const [openFilter, setOpenFilter] = useState<FilterType>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+
+  useEffect(() => {
+    const loadCars = async () => {
+      try {
+        setLoading(true);
+        console.log('Fleet: Starte Laden der Autos...');
+        const loadedCars = await getCarsFromSupabase();
+        console.log('Fleet: Geladene Autos:', loadedCars.length);
+        console.log('Fleet: Autos:', loadedCars.map(c => `${c.brand} ${c.model}`));
+        
+        if (loadedCars.length === 0) {
+          console.warn('Fleet: Keine Autos geladen, verwende Mock-Daten');
+          // Fallback zu Mock-Daten wenn keine Daten vorhanden
+          const { cars: mockCars } = await import('@/data/cars');
+          setCars(mockCars);
+        } else {
+          setCars(loadedCars);
+        }
+      } catch (error) {
+        console.error('Fleet: Fehler beim Laden der Autos:', error);
+        // Fallback zu Mock-Daten bei Fehler
+        const { cars: mockCars } = await import('@/data/cars');
+        console.log('Fleet: Verwende Mock-Daten als Fallback:', mockCars.length);
+        setCars(mockCars);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCars();
+  }, []);
 
   const brands = Array.from(new Set(cars.map(car => car.brand)));
   const types = ['Sedan', 'SUV', 'Hatchback', 'Coupe', 'Sport'];
@@ -56,8 +89,9 @@ export default function FleetPage() {
       });
     }
 
+    console.log('Fleet: Gefilterte Autos:', filtered.length);
     return filtered;
-  }, [priceFilter, manufactureFilter, typeFilter]);
+  }, [cars, priceFilter, manufactureFilter, typeFilter]);
 
   const handleRentNow = (car: Car) => {
     setSelectedCar(car);
@@ -278,13 +312,18 @@ export default function FleetPage() {
           )}
 
           {/* Cars Grid */}
-          {filteredCars.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-12 sm:py-20">
+              <div className="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-white"></div>
+              <p className="text-white mt-4 text-sm sm:text-base">Lade Fahrzeuge...</p>
+            </div>
+          ) : filteredCars.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-2xl font-semibold text-white">{t.fleet.noVehiclesFound}</p>
               <p className="text-white/70 mt-2">{t.fleet.tryAdjustingFilters}</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {filteredCars.map((car, index) => {
                 // Calculate MPG (simplified - based on fuel type)
                 const mpg = car.fuel === 'Electric' ? 0 : car.fuel === 'Hybrid' ? 45 : car.fuel === 'Diesel' ? 35 : 28;

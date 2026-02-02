@@ -43,7 +43,15 @@ export function Hero() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    window.location.href = '/booking';
+    const params = new URLSearchParams({
+      pickupLocation: formData.pickupLocation,
+      dropoffLocation: formData.dropoffLocation,
+      pickupDate: formData.pickupDate,
+      pickupTime: formData.pickupTime,
+      returnDate: formData.returnDate,
+      returnTime: formData.returnTime,
+    });
+    window.location.href = `/booking?${params.toString()}`;
   };
 
   useEffect(() => {
@@ -68,7 +76,7 @@ export function Hero() {
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-[60vh] sm:min-h-[70vh] flex flex-col bg-[#0A1929] overflow-hidden pt-16 sm:pt-20"
+      className="relative min-h-[60vh] sm:min-h-[70vh] flex flex-col bg-[#0A1929] overflow-x-hidden overflow-y-visible pt-16 sm:pt-20"
       style={{ perspective: '1000px' }}
     >
       {/* Background Image - Full Background */}
@@ -127,11 +135,11 @@ export function Hero() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="mb-8 relative z-10"
+            className="mb-8 relative z-10 overflow-visible"
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 leading-tight">
-              <span className="block">{t.hero.sloganPart1}</span>
-              <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 leading-normal sm:leading-tight overflow-visible py-2">
+              <span className="block pb-2">{t.hero.sloganPart1}</span>
+              <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent overflow-visible pt-1 pb-2">
                 {t.hero.sloganPart2}
               </span>
             </h1>

@@ -228,24 +228,12 @@ export function CategoriesSection() {
                           <motion.button
                             whileHover={{ scale: 1.05, x: 4 }}
                             whileTap={{ scale: 0.95 }}
-                            className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r ${category.gradient} text-white rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all group/btn relative overflow-hidden`}
+                            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-accent text-white rounded-xl font-bold text-sm hover:bg-accent/90 transition-all group/btn"
                           >
                             <span className="relative z-10">Explore</span>
                             <ArrowRight 
                               size={16} 
                               className="relative z-10 group-hover/btn:translate-x-1 transition-transform" 
-                            />
-                            {/* Shine Effect on Button */}
-                            <motion.div
-                              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                              animate={{
-                                x: ['-100%', '100%'],
-                              }}
-                              transition={{
-                                duration: 2,
-                                repeat: Infinity,
-                                repeatDelay: 1,
-                              }}
                             />
                           </motion.button>
                         </Link>

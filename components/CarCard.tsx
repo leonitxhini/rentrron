@@ -148,7 +148,7 @@ export function CarCard({ car, onQuickBook }: CarCardProps) {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleQuickBook}
-            className="px-6 py-3 bg-gradient-to-r from-accent to-accent-dark text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-accent/30 transition-all duration-200 text-sm"
+            className="px-6 py-3 bg-accent text-white font-semibold rounded-xl hover:bg-accent/90 transition-all duration-200 text-sm"
           >
             {t.fleet.quickBook}
           </motion.button>

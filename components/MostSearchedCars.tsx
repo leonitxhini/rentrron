@@ -1,20 +1,49 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Users, Settings, Fuel as FuelIcon, ArrowRight, Heart } from 'lucide-react';
-import { cars, Car } from '@/data/cars';
+import { Car } from '@/data/cars';
 import { useLanguage } from './LanguageProvider';
 import { RentNowModal } from './RentNowModal';
+import { getFeaturedCarsFromSupabase } from '@/lib/cars';
 
 export function MostSearchedCars() {
   const { t } = useLanguage();
-  const featuredCars = cars.filter(car => car.featured).slice(0, 6);
+  const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    const loadCars = async () => {
+      try {
+        // Lade alle Autos
+        const { getCarsFromSupabase } = await import('@/lib/cars');
+        const allCars = await getCarsFromSupabase();
+        console.log('MostSearchedCars: Geladene Autos:', allCars.length);
+        
+        // Sortiere nach Preis (teuerste zuerst) und nehme die 6 teuersten
+        const sortedByPrice = [...allCars].sort((a, b) => b.pricePerDay - a.pricePerDay);
+        const top6Expensive = sortedByPrice.slice(0, 6);
+        
+        console.log('MostSearchedCars: Top 6 teuerste Autos:', top6Expensive.map(c => `${c.name} - €${c.pricePerDay}`));
+        setFeaturedCars(top6Expensive);
+      } catch (error) {
+        console.error('Fehler beim Laden der Autos:', error);
+        // Fallback zu Mock-Daten bei Fehler
+        const { cars: mockCars } = await import('@/data/cars');
+        const sortedMock = [...mockCars].sort((a, b) => b.pricePerDay - a.pricePerDay);
+        setFeaturedCars(sortedMock.slice(0, 6));
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCars();
+  }, []);
 
   const toggleFavorite = (carId: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -46,9 +75,9 @@ export function MostSearchedCars() {
             className="text-center"
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-2 px-4">
-              <span className="text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">OUR</span>{' '}
+              <span className="text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">{t.ourCars.our}</span>{' '}
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_4px_12px_rgba(139,92,246,0.5)]">
-                RENTAL CARS
+                {t.ourCars.rentalCars}
               </span>
             </h2>
             <p className="text-white/90 text-base sm:text-lg md:text-xl font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)] px-4">
@@ -63,8 +92,14 @@ export function MostSearchedCars() {
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
 
         {/* Cars Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {featuredCars.map((car, index) => {
+        {loading ? (
+          <div className="text-center py-12 sm:py-20">
+            <div className="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-white"></div>
+            <p className="mt-4 text-white text-sm sm:text-base">Lade Fahrzeuge...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+            {featuredCars.map((car, index) => {
             const isFavorite = favorites.includes(car.id);
             // Calculate fuel capacity (simplified)
             const fuelCapacity = car.fuel === 'Electric' ? '0L' : car.fuel === 'Hybrid' ? '60L' : '100L';
@@ -80,9 +115,9 @@ export function MostSearchedCars() {
                 className="group"
               >
                 {/* Car Card */}
-                <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-full flex flex-col border border-gray-200">
+                <div className="relative bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-full flex flex-col border border-gray-200">
                   {/* Image Container */}
-                  <div className="relative w-full h-56 overflow-hidden bg-gray-100">
+                  <div className="relative w-full h-40 sm:h-48 md:h-56 overflow-hidden bg-gray-100">
                     <Image
                       src={car.images[0] || 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600'}
                       alt={car.name}
@@ -93,11 +128,11 @@ export function MostSearchedCars() {
                     {/* Favorite Button - Top Left */}
                     <button
                       onClick={(e) => toggleFavorite(car.id, e)}
-                      className="absolute top-3 left-3 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-md"
+                      className="absolute top-2 left-2 sm:top-3 sm:left-3 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-md"
                     >
                       <Heart
-                        size={20}
-                        className={isFavorite ? 'text-cyan-500 fill-cyan-500' : 'text-gray-400'}
+                        size={16}
+                        className={`sm:w-5 sm:h-5 ${isFavorite ? 'text-cyan-500 fill-cyan-500' : 'text-gray-400'}`}
                       />
                     </button>
                   </div>
@@ -151,7 +186,8 @@ export function MostSearchedCars() {
               </motion.div>
             );
           })}
-        </div>
+          </div>
+        )}
         </div>
       </div>
 

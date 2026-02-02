@@ -26,14 +26,55 @@ export function RentNowModal({ isOpen, onClose, car }: RentNowModalProps) {
   if (!car) return null;
 
   const handleBook = () => {
-    const message = generateWhatsAppMessage({
-      car: car.name,
-      fromDate: pickupDate || 'TBD',
-      toDate: returnDate || 'TBD',
-      location: pickupLocation || car.locationAvailability[0],
-      lang: language,
-    });
-    window.open(message, '_blank');
+    const days = calculateDays();
+    const totalPrice = (car.pricePerDay * days).toFixed(2);
+    
+    // Get translated location names using i18n
+    const getLocationName = (location: string) => {
+      // Map English location names to translated versions
+      if (location === 'Ferizaj' || location === t.quickBooking.locations.ferizaj) {
+        return t.quickBooking.locations.ferizaj;
+      }
+      if (location === 'Prishtina Airport' || location === t.quickBooking.locations.prishtina) {
+        return t.quickBooking.locations.prishtina;
+      }
+      if (location === 'Skopje Airport' || location === t.quickBooking.locations.skopje) {
+        return t.quickBooking.locations.skopje;
+      }
+      return location; // Fallback to original if not found
+    };
+    
+    const pickupLocationName = getLocationName(pickupLocation || car.locationAvailability[0]);
+    const dropoffLocationName = getLocationName(dropoffLocation || car.locationAvailability[0]);
+    
+    // Create a well-formatted WhatsApp message based on selected language
+    const greeting = language === 'en' 
+      ? 'Hello RRON Rent A Car! 👋\n\nI would like to make a booking:\n\n'
+      : 'Përshëndetje RRON Rent A Car! 👋\n\nDua të bëj një rezervim:\n\n';
+    
+    const bookingDetails = language === 'en'
+      ? `📅 *Booking Details:*\n` +
+        `🚗 Vehicle: ${car.name}\n` +
+        `📍 Pickup Location: ${pickupLocationName}\n` +
+        `📍 Drop-off Location: ${dropoffLocationName}\n` +
+        `📅 Pickup Date & Time: ${pickupDate || 'TBD'}${pickupDate ? ` at ${pickupTime}` : ''}\n` +
+        `📅 Return Date & Time: ${returnDate || 'TBD'}${returnDate ? ` at ${returnTime}` : ''}\n` +
+        `⏱️ Rental Period: ${days} ${days === 1 ? 'day' : 'days'}\n` +
+        `💰 Estimated Price: €${totalPrice}\n\n`
+      : `📅 *Detajet e Rezervimit:*\n` +
+        `🚗 Automjeti: ${car.name}\n` +
+        `📍 Vendi i Marrjes: ${pickupLocationName}\n` +
+        `📍 Vendi i Dorëzimit: ${dropoffLocationName}\n` +
+        `📅 Data dhe Ora e Marrjes: ${pickupDate || 'TBD'}${pickupDate ? ` në ${pickupTime}` : ''}\n` +
+        `📅 Data dhe Ora e Kthimit: ${returnDate || 'TBD'}${returnDate ? ` në ${returnTime}` : ''}\n` +
+        `⏱️ Periudha e Qirasë: ${days} ${days === 1 ? 'ditë' : 'ditë'}\n` +
+        `💰 Çmimi i Vlerësuar: €${totalPrice}\n\n`;
+    
+    const fullMessage = greeting + bookingDetails;
+    
+    const whatsappNumber = '38349123456';
+    const encodedMessage = encodeURIComponent(fullMessage);
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
     onClose();
   };
 
@@ -247,7 +288,7 @@ export function RentNowModal({ isOpen, onClose, car }: RentNowModalProps) {
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border-2 border-blue-100"
+                        className="bg-white/5 rounded-xl p-6 border border-white/10"
                       >
                         <div className="flex items-center justify-between mb-4">
                           <div>
@@ -284,7 +325,7 @@ export function RentNowModal({ isOpen, onClose, car }: RentNowModalProps) {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleBook}
-                    className="w-full sm:flex-1 px-6 py-3.5 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
+                    className="w-full sm:flex-1 px-6 py-3.5 sm:py-4 bg-accent text-white font-bold rounded-xl hover:bg-accent/90 transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
                   >
                     <MessageCircle size={18} className="sm:w-5 sm:h-5" />
                     <span>Book via WhatsApp</span>

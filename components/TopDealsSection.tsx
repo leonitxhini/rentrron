@@ -40,7 +40,7 @@ export function TopDealsSection() {
                 transition={{ delay: index * 0.05 }}
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-gradient-to-br from-gray-100 to-gray-50 hover:from-accent hover:to-purple-500 rounded-xl font-bold text-gray-700 hover:text-white transition-all duration-300 shadow-md hover:shadow-xl border-2 border-transparent hover:border-accent/50"
+                className="px-6 py-3 bg-white/10 hover:bg-accent rounded-xl font-bold text-white transition-all duration-300 border border-white/20 hover:border-accent"
               >
                 {brand}
               </motion.button>
@@ -82,15 +82,15 @@ export function TopDealsSection() {
                 </h3>
                 
                 <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 mb-4">
-                  <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full group-hover:from-accent/10 group-hover:to-purple-500/10 transition-all">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-full group-hover:bg-accent/20 transition-all">
                     <Users size={16} className="text-accent" />
                     <span className="font-semibold">{car.seats}</span>
                   </div>
-                  <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full group-hover:from-accent/10 group-hover:to-purple-500/10 transition-all">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-full group-hover:bg-accent/20 transition-all">
                     <span className="text-lg">{getFuelIcon(car.fuel)}</span>
                     <span className="font-semibold">{car.fuel}</span>
                   </div>
-                  <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full group-hover:from-accent/10 group-hover:to-purple-500/10 transition-all">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-full group-hover:bg-accent/20 transition-all">
                     <Settings size={16} className="text-accent" />
                     <span className="font-semibold">{car.transmission}</span>
                   </div>
