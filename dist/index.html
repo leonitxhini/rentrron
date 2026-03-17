@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0f23" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>RRON Rent A Car – Premium Car Rental</title>
+  <meta name="description" content="RRON Rent A Car – Premium Autovermietung in Ferizaj. Flughafen Pristina & Skopje. Audi, Golf, Peugeot und mehr." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #3b6ef5;
+      --blue-dark: #2a55d8;
+      --text: #111;
+      --muted: #888;
+      --light: #f5f5f7;
+      --border: #e8e8ec;
+      --white: #fff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 16px; left: 50%; z-index: 1000;
+      transform: translateX(-50%);
+      width: calc(100% - 80px);
+      max-width: 1280px;
+      height: 60px;
+      background: rgba(10,15,35,0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 9999px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.25), 0 1px 0 rgba(255,255,255,.06) inset;
+      display: flex; align-items: center;
+      padding: 0 24px; gap: 32px;
+      transition: background .3s, box-shadow .3s;
+    }
+    nav.scrolled {
+      background: rgba(10,15,35,0.95);
+      box-shadow: 0 12px 40px rgba(0,0,0,.3);
+    }
+    .nav-logo {
+      text-decoration: none;
+      display: flex; align-items: center;
+      flex-shrink: 0;
+    }
+    .nav-logo img {
+      height: 46px; width: auto;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+      flex: 1;
+    }
+    .nav-links a {
+      text-decoration: none; color: rgba(255,255,255,.65);
+      font-size: 14px; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a.active, .nav-links a:hover { color: #fff; }
+    .nav-right {
+      display: flex; align-items: center; gap: 12px; margin-left: auto;
+    }
+    .nav-search {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.1); border-radius: 50px;
+      padding: 8px 16px; border: 1px solid rgba(255,255,255,.18);
+    }
+    .nav-search input {
+      border: none; background: transparent; outline: none;
+      font-size: 13px; font-family: inherit; color: #fff; width: 120px;
+    }
+    .nav-search input::placeholder { color: rgba(255,255,255,.45); }
+    .nav-search i { color: rgba(255,255,255,.55); font-size: 13px; }
+    .nav-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 14px; cursor: pointer;
+    }
+    .nav-hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
+    .nav-hamburger span { width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+
+    /* ── HERO ── */
+    #hero {
+      margin-top: 0;
+      position: relative; overflow: visible;
+      height: 100vh; min-height: 620px;
+      background: #1a1a2e;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero-img {
+      position: absolute; inset: 0;
+      background: url('/hero.png') center center / cover no-repeat;
+      opacity: 1;
+      image-rendering: -webkit-optimize-contrast;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right, rgba(8,16,50,.75) 28%, rgba(8,16,50,.1) 70%),
+        linear-gradient(to top, rgba(8,16,50,.82) 0%, transparent 50%);
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      width: 100%;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      padding: 0 60px 36px;
+      gap: 40px;
+    }
+    .hero-content {
+      flex: 0 0 auto;
+      max-width: 500px;
+    }
+    .hero-content h1 {
+      font-size: clamp(36px, 5.5vw, 68px);
+      font-weight: 900; color: #fff;
+      line-height: 1.05;
+    }
+    .hero-desc {
+      flex: 0 0 auto;
+      max-width: 320px;
+      font-size: 13px; color: rgba(255,255,255,.6);
+      line-height: 1.75;
+      align-self: flex-end;
+      padding-bottom: 4px;
+    }
+
+    /* ── BOOKING BAR ── */
+    .booking-bar {
+      position: relative; z-index: 2;
+      margin: 0 60px 44px;
+      border-radius: 22px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.08);
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(20px);
+      padding: 10px;
+      display: flex; align-items: stretch; gap: 0;
+    }
+    .booking-field {
+      flex: 1; position: relative;
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 14px;
+      cursor: pointer;
+      border-radius: 14px;
+      transition: background .15s;
+      user-select: none;
+    }
+    .booking-field.active { background: #eff3ff; }
+    .booking-field + .booking-field::before {
+      content: '';
+      position: absolute; left: 0; top: 18%; height: 64%;
+      width: 1.5px; background: #e8eaf2; border-radius: 2px;
+    }
+    .booking-field:hover { background: #f0f4ff; }
+    .booking-field-icon {
+      width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+      background: #eff3ff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--blue);
+      transition: background .2s;
+    }
+    .booking-field.active .booking-field-icon { background: var(--blue); color: #fff; }
+    .booking-field-text { display: flex; flex-direction: column; gap: 3px; overflow: hidden; flex: 1; }
+    .booking-field label {
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 1.2px; color: #aaa;
+      text-transform: uppercase; cursor: pointer; white-space: nowrap;
+    }
+    .booking-field-value {
+      font-size: 14px; font-weight: 600; color: #111;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .booking-field-value.placeholder { color: #bbb; font-weight: 400; }
+    .booking-field-chevron {
+      font-size: 11px; color: #bbb; flex-shrink: 0;
+      transition: transform .25s;
+    }
+    .booking-field.active .booking-field-chevron { transform: rotate(180deg); color: var(--blue); }
+
+    /* Dropdown Panel */
+    .booking-dropdown {
+      position: absolute;
+      top: calc(100% + 12px); left: 0;
+      min-width: 300px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.18), 0 4px 16px rgba(0,0,0,.08);
+      border: 1px solid #eef0f5;
+      padding: 20px;
+      z-index: 100;
+      opacity: 0; pointer-events: none;
+      transform: translateY(-8px) scale(.98);
+      transition: opacity .22s ease, transform .22s ease;
+    }
+    .booking-dropdown.open {
+      opacity: 1; pointer-events: all;
+      transform: translateY(0) scale(1);
+    }
+    .booking-dropdown h4 {
+      font-size: 12px; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: #aaa; margin-bottom: 14px;
+    }
+    .dd-option {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px; border-radius: 12px;
+      cursor: pointer; transition: background .15s;
+      margin-bottom: 4px;
+    }
+    .dd-option:last-child { margin-bottom: 0; }
+    .dd-option:hover { background: #f0f4ff; }
+    .dd-option.selected { background: #eff3ff; }
+    .dd-option-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: #f0f4ff; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: var(--blue);
+    }
+    .dd-option.selected .dd-option-icon { background: var(--blue); color: #fff; }
+    .dd-option-label { font-size: 14px; font-weight: 600; color: #111; }
+    .dd-option-sub { font-size: 12px; color: #aaa; margin-top: 1px; }
+
+    /* Date Panel */
+    .dd-date-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .dd-date-input {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .dd-date-input label {
+      font-size: 11px; font-weight: 700; letter-spacing: .8px;
+      text-transform: uppercase; color: #aaa;
+    }
+    .dd-date-input input {
+      border: 1.5px solid #e8eaf2; border-radius: 12px;
+      padding: 11px 14px; font-size: 14px; font-family: inherit;
+      color: #111; font-weight: 500; outline: none;
+      transition: border-color .2s;
+      background: #fafbff;
+    }
+    .dd-date-input input:focus { border-color: var(--blue); background: #fff; }
+    .dd-apply-btn {
+      width: 100%; padding: 12px;
+      background: var(--blue); color: #fff;
+      border: none; border-radius: 12px;
+      font-size: 14px; font-weight: 700; font-family: inherit;
+      cursor: pointer; transition: background .2s;
+      margin-top: 4px;
+    }
+    .dd-apply-btn:hover { background: var(--blue-dark); }
+
+    .booking-search-btn {
+      flex-shrink: 0;
+      padding: 0 32px;
+      background: var(--blue); color: #fff;
+      border: none; cursor: pointer;
+      font-weight: 700; font-size: 15px; font-family: inherit;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      display: flex; align-items: center; gap: 10px;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(59,110,245,.4);
+      white-space: nowrap;
+    }
+    .booking-search-btn:hover {
+      background: var(--blue-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(59,110,245,.5);
+    }
+    .booking-search-btn i { font-size: 14px; }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 80px 40px; }
+    section > *:not(.hero-img):not(.hero-overlay):not(.hero-inner):not(.booking-bar) {
+      max-width: 1280px; margin-left: auto; margin-right: auto;
+    }
+    .sec-header, .cat-grid, .trend-grid, .how-grid,
+    .fleet-grid, .services-grid, .loc-grid, .reviews-grid,
+    .contact-wrap, .sec-title, .faq-wrap {
+      max-width: 1280px; margin-left: auto; margin-right: auto;
+    }
+    nav { max-width: calc(1280px - 0px); }
+    .booking-bar { max-width: 1200px; margin-left: auto; margin-right: auto; }
+    .hero-inner { max-width: 1280px; margin-left: auto; margin-right: auto; width: 100%; }
+    .sec-title {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 900; margin-bottom: 40px; letter-spacing: -.5px;
+    }
+    .sec-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+    }
+    .sec-header .sec-title { margin-bottom: 0; }
+    .see-all {
+      font-size: 14px; font-weight: 600; color: var(--blue);
+      text-decoration: none; display: flex; align-items: center; gap: 4px;
+      white-space: nowrap;
+    }
+    .see-all:hover { text-decoration: underline; }
+
+    /* ── CAR CATEGORY ── */
+    #categories { background: var(--white); }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .cat-card {
+      border-radius: 18px; overflow: hidden;
+      position: relative; cursor: pointer;
+      aspect-ratio: 1/1;
+      background: #111;
+      transition: transform .3s, box-shadow .3s;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    }
+    .cat-card:hover { transform: translateY(-5px); box-shadow: 0 14px 40px rgba(0,0,0,.14); }
+    .cat-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; transition: transform .45s;
+    }
+    .cat-card:hover img { transform: scale(1.05); }
+    .cat-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.05) 60%);
+    }
+    .cat-card-content {
+      position: absolute; inset: 0;
+      padding: 16px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .cat-card-name {
+      font-size: 18px; font-weight: 800; color: #fff;
+      line-height: 1.2; letter-spacing: -.2px;
+      text-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .cat-arrow {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,.22);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255,255,255,.5);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; align-self: flex-end;
+      transition: background .2s, transform .2s;
+    }
+    .cat-card:hover .cat-arrow { background: var(--blue); border-color: var(--blue); transform: rotate(45deg); }
+
+    /* ── TREND VEHICLES ── */
+    #trend { background: var(--light); }
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .trend-card {
+      background: var(--white);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: box-shadow .3s, transform .3s;
+      cursor: pointer;
+    }
+    .trend-card:hover { box-shadow: 0 10px 32px rgba(0,0,0,.09); transform: translateY(-3px); }
+    .trend-card:first-child { background: #dce8ff; border-color: #c0d4ff; }
+    .trend-card-img {
+      height: 140px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; padding: 10px;
+    }
+    .trend-card-img img {
+      width: 100%; height: 100%; object-fit: contain;
+      display: block; transition: transform .35s;
+    }
+    .trend-card:hover .trend-card-img img { transform: scale(1.06); }
+    .trend-card-info {
+      padding: 12px 16px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .trend-card-name { font-size: 14px; font-weight: 700; color: #111; }
+    .trend-card-price { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .trend-book-btn {
+      padding: 8px 16px; border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: transparent; color: #111;
+      font-size: 12px; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: background .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .trend-book-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+    /* ── HOW IT WORKS ── */
+    #how { background: var(--light); }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .how-item {
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+      gap: 16px;
+    }
+    .how-num {
+      font-size: 13px; font-weight: 700; color: var(--blue);
+      letter-spacing: 1px;
+    }
+    .how-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: var(--white); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; color: var(--blue);
+    }
+    .how-title { font-size: 17px; font-weight: 800; }
+    .how-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ── FLEET / CARS ── */
+    #fleet { background: var(--white); }
+    .fleet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .car-card {
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow .3s, transform .3s;
+      background: var(--white);
+      cursor: pointer;
+    }
+    .car-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.1); transform: translateY(-4px); }
+    .car-img-wrap {
+      height: 200px; overflow: hidden;
+      background: var(--light);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .car-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .car-tag {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--blue); color: #fff;
+      font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 50px;
+      letter-spacing: .3px;
+    }
+    .car-body { padding: 18px 20px 20px; }
+    .car-class-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 6px;
+    }
+    .car-name-big { font-size: 20px; font-weight: 800; margin-bottom: 14px; }
+    .car-specs-row {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      padding-bottom: 14px; border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+    .car-spec {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 13px; color: var(--muted);
+    }
+    .car-spec i { font-size: 12px; color: var(--blue); }
+    .car-footer-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .car-price-big { font-size: 22px; font-weight: 900; }
+    .car-price-big span { font-size: 13px; font-weight: 400; color: var(--muted); }
+    .car-book-btn {
+      padding: 9px 20px; border-radius: 50px;
+      background: var(--blue); color: #fff;
+      font-size: 13px; font-weight: 700; border: none;
+      cursor: pointer; text-decoration: none;
+      transition: background .2s;
+    }
+    .car-book-btn:hover { background: var(--blue-dark); }
+
+    /* ── SERVICES ── */
+    #services { background: var(--light); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;
+    }
+    .svc-card {
+      background: var(--white); border-radius: 16px;
+      border: 1px solid var(--border); padding: 28px;
+      transition: box-shadow .3s;
+    }
+    .svc-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,.07); }
+    .svc-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: #eff3ff; display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: var(--blue); margin-bottom: 16px;
+    }
+    .svc-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+    .svc-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ── LOCATIONS ── */
+    #locations { background: var(--white); }
+    .loc-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
+    }
+    .loc-card {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+      transition: box-shadow .3s, transform .3s;
+    }
+    .loc-card:hover { box-shadow: 0 10px 32px rgba(0,0,0,.08); transform: translateY(-3px); }
+    .loc-img {
+      height: 180px; overflow: hidden;
+      background: var(--light);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .loc-img img { width: 100%; height: 100%; object-fit: cover; }
+    .loc-body { padding: 20px; }
+    .loc-name { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+    .loc-addr { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+    .loc-addr i { color: var(--blue); margin-right: 4px; }
+    .loc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .loc-tag {
+      font-size: 11px; font-weight: 600;
+      background: #eff3ff; color: var(--blue);
+      padding: 3px 10px; border-radius: 50px;
+    }
+
+    /* ── FAQ ── */
+    #faq { background: var(--light); }
+    .faq-wrap { max-width: 740px; margin: 0 auto; }
+    .faq-item {
+      background: var(--white); border-radius: 14px;
+      border: 1px solid var(--border); margin-bottom: 12px; overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 22px; background: none; border: none;
+      text-align: left; font-size: 15px; font-weight: 700; font-family: inherit;
+      cursor: pointer; color: var(--text);
+      transition: background .2s;
+    }
+    .faq-q:hover { background: var(--light); }
+    .faq-q i { font-size: 13px; color: var(--muted); transition: transform .3s; }
+    .faq-q.open i { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .35s;
+      padding: 0 22px; font-size: 14px; color: var(--muted); line-height: 1.7;
+    }
+    .faq-a.open { max-height: 300px; padding: 0 22px 18px; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--white); }
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+    }
+    .contact-info h2 { font-size: clamp(24px, 3vw, 38px); font-weight: 900; margin-bottom: 16px; }
+    .contact-info p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+    .contact-list { display: flex; flex-direction: column; gap: 16px; }
+    .citem {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .citem-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: #eff3ff; display: flex; align-items: center; justify-content: center;
+      font-size: 17px; color: var(--blue); flex-shrink: 0;
+    }
+    .citem-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+    .citem-val { font-size: 15px; font-weight: 600; }
+    .citem-val a { color: var(--text); text-decoration: none; }
+    .citem-val a:hover { color: var(--blue); }
+
+    .contact-form {
+      background: var(--light); border-radius: 20px; padding: 32px;
+      border: 1px solid var(--border);
+    }
+    .form-title { font-size: 20px; font-weight: 800; margin-bottom: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fgroup { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .fgroup label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+    .fgroup input, .fgroup select, .fgroup textarea {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 11px 14px;
+      color: var(--text); font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color .2s;
+    }
+    .fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus { border-color: var(--blue); }
+    .fgroup textarea { resize: vertical; min-height: 90px; }
+    .fgroup select option { background: var(--white); }
+    .form-btn {
+      width: 100%; padding: 13px; border-radius: 50px;
+      background: var(--blue); color: #fff; border: none;
+      font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit;
+      transition: background .2s; margin-top: 4px;
+    }
+    .form-btn:hover { background: var(--blue-dark); }
+    .form-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 10px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111; color: #fff;
+      padding: 56px 40px 28px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand p { font-size: 14px; color: #888; line-height: 1.7; margin: 14px 0 20px; max-width: 260px; }
+    .footer-brand-logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; }
+    .footer-brand-logo span { color: var(--blue); }
+    .social-row { display: flex; gap: 10px; }
+    .soc {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: #222; display: flex; align-items: center; justify-content: center;
+      color: #888; font-size: 15px; text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .soc:hover { background: var(--blue); color: #fff; }
+    .footer-col h4 { font-size: 14px; font-weight: 700; margin-bottom: 18px; color: #fff; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { color: #888; font-size: 14px; text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid #222; padding-top: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p { font-size: 13px; color: #555; }
+    .footer-bottom span { color: var(--blue); font-weight: 600; }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      background: var(--white); border: 1px solid #d4edda;
+      border-radius: 14px; padding: 14px 22px;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.12);
+      transform: translateY(100px); opacity: 0;
+      transition: transform .4s, opacity .4s;
+      pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast i { color: #28a745; font-size: 18px; }
+    #toast span { font-size: 14px; font-weight: 600; color: var(--text); }
+
+    /* ── MOBILE MENU ── */
+    .mob-menu {
+      display: none; position: fixed;
+      top: 88px; left: 50%; transform: translateX(-50%);
+      width: calc(100% - 32px);
+      z-index: 999;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.12);
+      padding: 16px 20px; flex-direction: column; gap: 4px;
+    }
+    .mob-menu.open { display: flex; }
+    .mob-menu a {
+      font-size: 16px; font-weight: 500; color: var(--text);
+      text-decoration: none; padding: 6px 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    /* ── TABLET ── */
+    @media (max-width: 1100px) {
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .fleet-grid { grid-template-columns: repeat(2, 1fr); }
+      .how-grid { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .loc-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      /* Navbar */
+      nav {
+        padding: 0 16px;
+        top: 10px;
+        width: calc(100% - 32px);
+        height: 54px;
+      }
+      .nav-links, .nav-search, .nav-avatar { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-logo img { height: 36px; }
+
+      /* Mobile Menu */
+      .mob-menu { top: 74px; width: calc(100% - 24px); }
+      .mob-menu a { font-size: 15px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+
+      /* Sections */
+      section { padding: 48px 16px; }
+
+      /* Hero */
+      #hero { min-height: 100svh; }
+      .hero-inner {
+        flex-direction: column; align-items: flex-start;
+        padding: 0 16px 20px; gap: 12px;
+      }
+      .hero-content h1 { font-size: clamp(28px, 8vw, 44px); }
+      .hero-desc { max-width: 100%; font-size: 13px; }
+
+      /* Booking Bar */
+      .booking-bar {
+        margin: 0 12px 24px;
+        border-radius: 16px;
+        flex-direction: column;
+        padding: 8px;
+        gap: 0;
+      }
+      .booking-field {
+        padding: 12px 14px;
+        border-radius: 10px;
+      }
+      .booking-field + .booking-field::before { display: none; }
+      .booking-field-icon { width: 34px; height: 34px; font-size: 14px; border-radius: 10px; }
+      .booking-search-btn {
+        width: 100%; padding: 14px;
+        justify-content: center;
+        border-radius: 12px;
+        margin-top: 4px;
+      }
+      .booking-dropdown { min-width: 100%; left: 0; right: 0; }
+
+      /* Car Category */
+      .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .cat-card-name { font-size: 15px; }
+
+      /* How it works */
+      .how-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 100%; }
+
+      /* Fleet */
+      .fleet-grid { grid-template-columns: 1fr; }
+
+      /* Services */
+      .services-grid { grid-template-columns: 1fr; }
+
+      /* Locations */
+      .loc-grid { grid-template-columns: 1fr; }
+
+      /* Sec titles */
+      .sec-title { font-size: clamp(22px, 5vw, 32px); }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      footer { padding: 40px 16px 24px; }
+      .footer-bottom { flex-direction: column; text-align: center; gap: 6px; }
+    }
+
+    /* ── SMALL PHONES ── */
+    @media (max-width: 420px) {
+      .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .how-grid { grid-template-columns: 1fr; }
+      .hero-content h1 { font-size: 28px; }
+      .booking-field-text label { font-size: 9px; }
+      .booking-field input, .booking-field select { font-size: 13px; }
+      nav { width: calc(100% - 24px); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="/logo.png" alt="RRON Rent A Car" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#fleet">Fleet</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search..." />
+    </div>
+    <div class="nav-avatar"><i class="fas fa-user"></i></div>
+    <div class="nav-hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <a href="#" onclick="toggleMenu()">Home</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#fleet" onclick="toggleMenu()">Fleet</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO + BOOKING BAR -->
+<section id="hero">
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h1>Premium car<br>rental</h1>
+    </div>
+    <div class="hero-desc">
+      We want you to have a stress-free rental experience, so we make it easy to hire a car – by providing simple search tools, customer reviews and plenty of pick-up locations across the city.
+    </div>
+  </div>
+  <div class="booking-bar" id="bookingBar">
+
+    <!-- Pick Up -->
+    <div class="booking-field" id="bf-pickup" onclick="toggleDD('dd-pickup', 'bf-pickup')">
+      <div class="booking-field-icon"><i class="fas fa-map-marker-alt"></i></div>
+      <div class="booking-field-text">
+        <label>Pick Up</label>
+        <span class="booking-field-value placeholder" id="val-pickup">Select location</span>
+      </div>
+      <i class="fas fa-chevron-down booking-field-chevron"></i>
+      <div class="booking-dropdown" id="dd-pickup">
+        <h4>Choose pick-up location</h4>
+        <div class="dd-option" onclick="selectLocation('pickup','Ferizaj – HQ','Rr. Emin Duraku, Ferizaj',event)">
+          <div class="dd-option-icon"><i class="fas fa-building"></i></div>
+          <div><div class="dd-option-label">Ferizaj – HQ</div><div class="dd-option-sub">Rr. Emin Duraku, Ferizaj</div></div>
+        </div>
+        <div class="dd-option" onclick="selectLocation('pickup','Pristina Airport','Prishtina Int. Airport',event)">
+          <div class="dd-option-icon"><i class="fas fa-plane-departure"></i></div>
+          <div><div class="dd-option-label">Pristina Airport</div><div class="dd-option-sub">Prishtina Int. Airport</div></div>
+        </div>
+        <div class="dd-option" onclick="selectLocation('pickup','Skopje Airport','Skopje Int. Airport, MK',event)">
+          <div class="dd-option-icon"><i class="fas fa-plane"></i></div>
+          <div><div class="dd-option-label">Skopje Airport</div><div class="dd-option-sub">Skopje Int. Airport, MK</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drop Off -->
+    <div class="booking-field" id="bf-dropoff" onclick="toggleDD('dd-dropoff', 'bf-dropoff')">
+      <div class="booking-field-icon"><i class="fas fa-flag-checkered"></i></div>
+      <div class="booking-field-text">
+        <label>Drop Off</label>
+        <span class="booking-field-value placeholder" id="val-dropoff">Select location</span>
+      </div>
+      <i class="fas fa-chevron-down booking-field-chevron"></i>
+      <div class="booking-dropdown" id="dd-dropoff">
+        <h4>Choose drop-off location</h4>
+        <div class="dd-option" onclick="selectLocation('dropoff','Ferizaj – HQ','Rr. Emin Duraku, Ferizaj',event)">
+          <div class="dd-option-icon"><i class="fas fa-building"></i></div>
+          <div><div class="dd-option-label">Ferizaj – HQ</div><div class="dd-option-sub">Rr. Emin Duraku, Ferizaj</div></div>
+        </div>
+        <div class="dd-option" onclick="selectLocation('dropoff','Pristina Airport','Prishtina Int. Airport',event)">
+          <div class="dd-option-icon"><i class="fas fa-plane-departure"></i></div>
+          <div><div class="dd-option-label">Pristina Airport</div><div class="dd-option-sub">Prishtina Int. Airport</div></div>
+        </div>
+        <div class="dd-option" onclick="selectLocation('dropoff','Skopje Airport','Skopje Int. Airport, MK',event)">
+          <div class="dd-option-icon"><i class="fas fa-plane"></i></div>
+          <div><div class="dd-option-label">Skopje Airport</div><div class="dd-option-sub">Skopje Int. Airport, MK</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pick Up Date -->
+    <div class="booking-field" id="bf-pickup-date" onclick="toggleDD('dd-pickup-date','bf-pickup-date')">
+      <div class="booking-field-icon"><i class="fas fa-calendar-alt"></i></div>
+      <div class="booking-field-text">
+        <label>Pick Up Date & Time</label>
+        <span class="booking-field-value placeholder" id="val-pickup-date">Select date</span>
+      </div>
+      <i class="fas fa-chevron-down booking-field-chevron"></i>
+      <div class="booking-dropdown" id="dd-pickup-date">
+        <h4>Pick-up date & time</h4>
+        <div class="dd-date-wrap">
+          <div class="dd-date-input">
+            <label>Date</label>
+            <input type="date" id="in-pickup-date" onchange="updateDate('pickup')" />
+          </div>
+          <div class="dd-date-input">
+            <label>Time</label>
+            <input type="time" id="in-pickup-time" value="10:00" onchange="updateDate('pickup')" />
+          </div>
+          <button class="dd-apply-btn" onclick="closeDD(event)">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drop Off Date -->
+    <div class="booking-field" id="bf-dropoff-date" onclick="toggleDD('dd-dropoff-date','bf-dropoff-date')">
+      <div class="booking-field-icon"><i class="fas fa-calendar-check"></i></div>
+      <div class="booking-field-text">
+        <label>Drop Off Date & Time</label>
+        <span class="booking-field-value placeholder" id="val-dropoff-date">Select date</span>
+      </div>
+      <i class="fas fa-chevron-down booking-field-chevron"></i>
+      <div class="booking-dropdown" id="dd-dropoff-date">
+        <h4>Drop-off date & time</h4>
+        <div class="dd-date-wrap">
+          <div class="dd-date-input">
+            <label>Date</label>
+            <input type="date" id="in-dropoff-date" onchange="updateDate('dropoff')" />
+          </div>
+          <div class="dd-date-input">
+            <label>Time</label>
+            <input type="time" id="in-dropoff-time" value="10:00" onchange="updateDate('dropoff')" />
+          </div>
+          <button class="dd-apply-btn" onclick="closeDD(event)">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="booking-search-btn" onclick="doSearch()">
+      <i class="fas fa-search"></i> Search
+    </button>
+  </div>
+</section>
+
+<!-- CAR CATEGORY -->
+<section id="categories">
+  <div class="sec-header">
+    <h2 class="sec-title">Car Category</h2>
+    <a href="#fleet" class="see-all">See all <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card" onclick="document.getElementById('fleet').scrollIntoView({behavior:'smooth'})">
+      <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600&q=85&auto=format&fit=crop" alt="Audi" loading="lazy" />
+      <div class="cat-card-overlay"></div>
+      <div class="cat-card-content">
+        <span class="cat-card-name">Audi</span>
+        <span class="cat-arrow"><i class="fas fa-arrow-right"></i></span>
+      </div>
+    </div>
+    <div class="cat-card" onclick="document.getElementById('fleet').scrollIntoView({behavior:'smooth'})">
+      <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&q=85&auto=format&fit=crop" alt="VW Golf" loading="lazy" />
+      <div class="cat-card-overlay"></div>
+      <div class="cat-card-content">
+        <span class="cat-card-name">VW Golf</span>
+        <span class="cat-arrow"><i class="fas fa-arrow-right"></i></span>
+      </div>
+    </div>
+    <div class="cat-card" onclick="document.getElementById('fleet').scrollIntoView({behavior:'smooth'})">
+      <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=600&q=85&auto=format&fit=crop" alt="Peugeot" loading="lazy" />
+      <div class="cat-card-overlay"></div>
+      <div class="cat-card-content">
+        <span class="cat-card-name">Peugeot</span>
+        <span class="cat-arrow"><i class="fas fa-arrow-right"></i></span>
+      </div>
+    </div>
+    <div class="cat-card" onclick="document.getElementById('fleet').scrollIntoView({behavior:'smooth'})">
+      <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&q=85&auto=format&fit=crop" alt="Premium" loading="lazy" />
+      <div class="cat-card-overlay"></div>
+      <div class="cat-card-content">
+        <span class="cat-card-name">Premium</span>
+        <span class="cat-arrow"><i class="fas fa-arrow-right"></i></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <h2 class="sec-title" style="text-align:center;margin-bottom:48px;">How it works</h2>
+  <div class="how-grid" style="text-align:center;">
+    <div class="how-item" style="align-items:center;">
+      <div class="how-num">STEP 01</div>
+      <div class="how-icon"><i class="fas fa-car"></i></div>
+      <div class="how-title">Choose a Vehicle</div>
+      <div class="how-desc">Browse our fleet and pick the car that best suits your needs and budget.</div>
+    </div>
+    <div class="how-item" style="align-items:center;">
+      <div class="how-num">STEP 02</div>
+      <div class="how-icon"><i class="fas fa-calendar-check"></i></div>
+      <div class="how-title">Pick Date & Location</div>
+      <div class="how-desc">Select your preferred pick-up and drop-off dates and one of our locations.</div>
+    </div>
+    <div class="how-item" style="align-items:center;">
+      <div class="how-num">STEP 03</div>
+      <div class="how-icon"><i class="fas fa-paper-plane"></i></div>
+      <div class="how-title">Send a Request</div>
+      <div class="how-desc">Submit your booking request – we confirm within a few hours via WhatsApp or email.</div>
+    </div>
+    <div class="how-item" style="align-items:center;">
+      <div class="how-num">STEP 04</div>
+      <div class="how-icon"><i class="fas fa-key"></i></div>
+      <div class="how-title">Pick Up Your Keys</div>
+      <div class="how-desc">Collect the car at the agreed location and enjoy your drive.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section id="fleet">
+  <div class="sec-header">
+    <h2 class="sec-title">Our Fleet</h2>
+    <a href="#contact" class="see-all">Book now <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="fleet-grid">
+
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600&q=80&auto=format&fit=crop" alt="Audi A6" loading="lazy" />
+        <span class="car-tag">Available</span>
+      </div>
+      <div class="car-body">
+        <div class="car-class-label">Executive</div>
+        <div class="car-name-big">Audi A6</div>
+        <div class="car-specs-row">
+          <span class="car-spec"><i class="fas fa-cog"></i> Automatic</span>
+          <span class="car-spec"><i class="fas fa-gas-pump"></i> Diesel</span>
+          <span class="car-spec"><i class="fas fa-users"></i> 5 seats</span>
+          <span class="car-spec"><i class="fas fa-suitcase"></i> 4 bags</span>
+        </div>
+        <div class="car-footer-row">
+          <div class="car-price-big">€59 <span>/ day</span></div>
+          <a href="#contact" class="car-book-btn">Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80&auto=format&fit=crop" alt="VW Golf 8" loading="lazy" />
+        <span class="car-tag">Available</span>
+      </div>
+      <div class="car-body">
+        <div class="car-class-label">Compact</div>
+        <div class="car-name-big">VW Golf 8</div>
+        <div class="car-specs-row">
+          <span class="car-spec"><i class="fas fa-cog"></i> Manual</span>
+          <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          <span class="car-spec"><i class="fas fa-users"></i> 5 seats</span>
+          <span class="car-spec"><i class="fas fa-suitcase"></i> 3 bags</span>
+        </div>
+        <div class="car-footer-row">
+          <div class="car-price-big">€39 <span>/ day</span></div>
+          <a href="#contact" class="car-book-btn">Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img src="https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=600&q=80&auto=format&fit=crop" alt="Audi A5" loading="lazy" />
+        <span class="car-tag">Available</span>
+      </div>
+      <div class="car-body">
+        <div class="car-class-label">Mid-size Sport</div>
+        <div class="car-name-big">Audi A5</div>
+        <div class="car-specs-row">
+          <span class="car-spec"><i class="fas fa-cog"></i> Automatic</span>
+          <span class="car-spec"><i class="fas fa-gas-pump"></i> Diesel</span>
+          <span class="car-spec"><i class="fas fa-users"></i> 5 seats</span>
+          <span class="car-spec"><i class="fas fa-suitcase"></i> 3 bags</span>
+        </div>
+        <div class="car-footer-row">
+          <div class="car-price-big">€55 <span>/ day</span></div>
+          <a href="#contact" class="car-book-btn">Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&q=80&auto=format&fit=crop" alt="Audi A3" loading="lazy" />
+        <span class="car-tag">Available</span>
+      </div>
+      <div class="car-body">
+        <div class="car-class-label">Compact Premium</div>
+        <div class="car-name-big">Audi A3</div>
+        <div class="car-specs-row">
+          <span class="car-spec"><i class="fas fa-cog"></i> Automatic</span>
+          <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          <span class="car-spec"><i class="fas fa-users"></i> 5 seats</span>
+          <span class="car-spec"><i class="fas fa-suitcase"></i> 2 bags</span>
+        </div>
+        <div class="car-footer-row">
+          <div class="car-price-big">€45 <span>/ day</span></div>
+          <a href="#contact" class="car-book-btn">Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img src="https://images.unsplash.com/photo-1564865878688-9a244444042a?w=600&q=80&auto=format&fit=crop" alt="Peugeot 308" loading="lazy" />
+        <span class="car-tag">Available</span>
+      </div>
+      <div class="car-body">
+        <div class="car-class-label">Mid-size</div>
+        <div class="car-name-big">Peugeot 308</div>
+        <div class="car-specs-row">
+          <span class="car-spec"><i class="fas fa-cog"></i> Automatic</span>
+          <span class="car-spec"><i class="fas fa-gas-pump"></i> Diesel</span>
+          <span class="car-spec"><i class="fas fa-users"></i> 5 seats</span>
+          <span class="car-spec"><i class="fas fa-suitcase"></i> 3 bags</span>
+        </div>
+        <div class="car-footer-row">
+          <div class="car-price-big">€37 <span>/ day</span></div>
+          <a href="#contact" class="car-book-btn">Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img src="https://images.unsplash.com/photo-1471444928139-48c5bf5173f8?w=600&q=80&auto=format&fit=crop" alt="Peugeot 208" loading="lazy" />
+        <span class="car-tag">Available</span>
+      </div>
+      <div class="car-body">
+        <div class="car-class-label">City Car</div>
+        <div class="car-name-big">Peugeot 208</div>
+        <div class="car-specs-row">
+          <span class="car-spec"><i class="fas fa-cog"></i> Manual</span>
+          <span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span>
+          <span class="car-spec"><i class="fas fa-users"></i> 5 seats</span>
+          <span class="car-spec"><i class="fas fa-suitcase"></i> 2 bags</span>
+        </div>
+        <div class="car-footer-row">
+          <div class="car-price-big">€29 <span>/ day</span></div>
+          <a href="#contact" class="car-book-btn">Book</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <h2 class="sec-title">Our Services</h2>
+  <div class="services-grid">
+    <div class="svc-card">
+      <div class="svc-icon"><i class="fas fa-plane-arrival"></i></div>
+      <div class="svc-title">Airport Transfer</div>
+      <div class="svc-desc">Direct pick-up at Pristina or Skopje Airport – punctual and reliable.</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon"><i class="fas fa-clock"></i></div>
+      <div class="svc-title">24/7 Support</div>
+      <div class="svc-desc">Available around the clock by phone, WhatsApp or Instagram.</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon"><i class="fas fa-shield-alt"></i></div>
+      <div class="svc-title">Full Insurance</div>
+      <div class="svc-desc">All vehicles are fully insured – drive with complete peace of mind.</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon"><i class="fas fa-map-marker-alt"></i></div>
+      <div class="svc-title">Flexible Drop-off</div>
+      <div class="svc-desc">Return the vehicle at any of our locations or directly at the airport.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section id="locations">
+  <h2 class="sec-title">Our Locations</h2>
+  <div class="loc-grid">
+    <div class="loc-card">
+      <div class="loc-img">
+        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=80&auto=format&fit=crop" alt="Ferizaj" loading="lazy" />
+      </div>
+      <div class="loc-body">
+        <div class="loc-name">Ferizaj – Headquarters</div>
+        <div class="loc-addr"><i class="fas fa-map-marker-alt"></i>Rr. Emin Duraku, Ferizaj 70000, Kosovo</div>
+        <div class="loc-tags">
+          <span class="loc-tag">Main Location</span>
+          <span class="loc-tag">Mon–Sun</span>
+          <span class="loc-tag">Parking</span>
+        </div>
+      </div>
+    </div>
+    <div class="loc-card">
+      <div class="loc-img">
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80&auto=format&fit=crop" alt="Pristina Airport" loading="lazy" />
+      </div>
+      <div class="loc-body">
+        <div class="loc-name">Pristina Airport</div>
+        <div class="loc-addr"><i class="fas fa-map-marker-alt"></i>Prishtina International Airport Adem Jashari, Kosovo</div>
+        <div class="loc-tags">
+          <span class="loc-tag">Airport Service</span>
+          <span class="loc-tag">24/7</span>
+          <span class="loc-tag">Pick-up & Drop-off</span>
+        </div>
+      </div>
+    </div>
+    <div class="loc-card">
+      <div class="loc-img">
+        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80&auto=format&fit=crop" alt="Skopje Airport" loading="lazy" />
+      </div>
+      <div class="loc-body">
+        <div class="loc-name">Skopje Airport</div>
+        <div class="loc-addr"><i class="fas fa-map-marker-alt"></i>Skopje International Airport, North Macedonia</div>
+        <div class="loc-tags">
+          <span class="loc-tag">Airport Service</span>
+          <span class="loc-tag">On Request</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<div id="faq" style="width:100%;overflow:hidden;line-height:0;">
+  <img src="/promo.png" alt="Drive all over the Balkans" style="width:100%;display:block;height:auto;" loading="lazy" />
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="/logo.png" alt="RRON Rent A Car" style="height:48px;width:auto;object-fit:contain;margin-bottom:4px;" />
+      <p>RRON Rent A Car – your reliable car rental in Kosovo. Premium vehicles, fair prices, outstanding service.</p>
+      <div class="social-row">
+        <a href="https://instagram.com/rentacarron" target="_blank" class="soc"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/38370000000" target="_blank" class="soc"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://rentacarron.com" target="_blank" class="soc"><i class="fas fa-globe"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Vehicles</h4>
+      <ul>
+        <li><a href="#fleet">Audi A6</a></li>
+        <li><a href="#fleet">VW Golf 8</a></li>
+        <li><a href="#fleet">Audi A5</a></li>
+        <li><a href="#fleet">Audi A3</a></li>
+        <li><a href="#fleet">Peugeot 308</a></li>
+        <li><a href="#fleet">Peugeot 208</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Airport Transfer</a></li>
+        <li><a href="#services">24/7 Support</a></li>
+        <li><a href="#services">Full Insurance</a></li>
+        <li><a href="#services">Flexible Drop-off</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Locations</h4>
+      <ul>
+        <li><a href="#locations">Ferizaj</a></li>
+        <li><a href="#locations">Pristina Airport</a></li>
+        <li><a href="#locations">Skopje Airport</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>RRON Rent A Car</span>. All rights reserved.</p>
+    <p>Rr. Emin Duraku, Ferizaj 70000, Kosovo</p>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span>Request sent! We'll be in touch soon.</span>
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobMenu').classList.toggle('open');
+  }
+
+  function setTab(el) {
+    document.querySelectorAll('.booking-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function doSearch() {
+    document.getElementById('fleet').scrollIntoView({ behavior: 'smooth' });
+    closeAllDD();
+  }
+
+  // ── Booking Dropdown Logic ──
+  let activeDD = null;
+  let activeBF = null;
+
+  function toggleDD(ddId, bfId) {
+    const dd = document.getElementById(ddId);
+    const bf = document.getElementById(bfId);
+    if (activeDD && activeDD !== dd) {
+      activeDD.classList.remove('open');
+      if (activeBF) activeBF.classList.remove('active');
+    }
+    const isOpen = dd.classList.contains('open');
+    dd.classList.toggle('open', !isOpen);
+    bf.classList.toggle('active', !isOpen);
+    activeDD = isOpen ? null : dd;
+    activeBF = isOpen ? null : bf;
+  }
+
+  function closeAllDD() {
+    document.querySelectorAll('.booking-dropdown').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.booking-field').forEach(f => f.classList.remove('active'));
+    activeDD = null; activeBF = null;
+  }
+
+  function closeDD(e) {
+    e.stopPropagation();
+    closeAllDD();
+  }
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.booking-field')) closeAllDD();
+  });
+
+  function selectLocation(type, name, sub, e) {
+    e.stopPropagation();
+    const val = document.getElementById('val-' + type);
+    val.textContent = name;
+    val.classList.remove('placeholder');
+    // mark selected
+    const dd = document.getElementById('dd-' + type);
+    dd.querySelectorAll('.dd-option').forEach(o => o.classList.remove('selected'));
+    e.currentTarget.classList.add('selected');
+    closeAllDD();
+  }
+
+  function updateDate(type) {
+    const dateEl = document.getElementById('in-' + type + '-date');
+    const timeEl = document.getElementById('in-' + type + '-time');
+    if (!dateEl.value) return;
+    const d = new Date(dateEl.value + 'T' + (timeEl.value || '10:00'));
+    const str = d.toLocaleDateString('de-DE', { day:'2-digit', month:'short', year:'numeric' })
+                + ' · ' + (timeEl.value || '10:00');
+    const val = document.getElementById('val-' + type + '-date');
+    val.textContent = str;
+    val.classList.remove('placeholder');
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+    e.target.reset();
+  }
+
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+    document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
+    if (!isOpen) {
+      answer.classList.add('open');
+      btn.classList.add('open');
+    }
+  }
+
+  // Scroll active nav
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+
+    const sections = ['hero','categories','fleet','services','locations','faq','contact'];
+    let current = 'hero';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 80) current = id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      const href = a.getAttribute('href').replace('#','');
+      if (href === current || (href === '' && current === 'hero')) a.classList.add('active');
+    });
+  });
+
+  // Card reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.car-card, .svc-card, .loc-card, .cat-card, .how-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity .45s ease, transform .45s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
